@@ -14,6 +14,7 @@ from pathlib import Path
 from decouple import Csv, config
 import dj_database_url
 import django_heroku
+import os
 
 MODE=config('MODE',default='dev')
 SECRET_KEY=config('SECRET_KEY')
@@ -141,5 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'static'),
+]
 django_heroku.settings(locals())
