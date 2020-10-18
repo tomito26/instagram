@@ -22,5 +22,10 @@ def register(request):
     return render(request, 'registration/registration.html', context)
 
 
+@login_required
+def profile(request):
+    return render(request, 'users/profile.html')
+
+
 def welcome(request):
     return render(request,'welcome.html')
