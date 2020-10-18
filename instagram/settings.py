@@ -153,4 +153,9 @@ STATICFILES_DIRS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'welcome'
 LOGIN_URL = 'login'
+
+cloudinary.config(cloud_name=config('CLOUD_NAME'),
+                  api_key=config('CLOUD_API_KEY'),
+                  api_secret=config("CLOUD_API_SECRET"))
+
 django_heroku.settings(locals())
