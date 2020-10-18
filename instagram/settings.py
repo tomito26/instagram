@@ -15,6 +15,9 @@ from decouple import Csv, config
 import dj_database_url
 import django_heroku
 import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 MODE=config('MODE',default='dev')
 SECRET_KEY=config('SECRET_KEY')
