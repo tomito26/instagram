@@ -21,5 +21,15 @@ class Image(models.Model):
     
 class Profile(models.Model):
     profile_photo =CloudinaryField('image')
-    Bio=models.TextField()
+    bio=models.TextField()
+    
+    def save_profile(self):
+        self.save()
+    
+    def delete_profile(self):
+        self.delete()
+    
+    def __str__(self):
+        return self.bio
+    
     
