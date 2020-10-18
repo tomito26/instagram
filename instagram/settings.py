@@ -44,6 +44,12 @@ else:
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
+cloudinary.config(
+    cloud_name=config('CLOUD_NAME'),
+    api_key=config('CLOUD_API_KEY'),
+    api_secret=config("CLOUD_API_SECRET")
+    )
+
 ALLOWED_HOSTS= config('ALLOWED_HOSTS',cast=Csv())
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
