@@ -1,0 +1,5 @@
+insta/
+*.pyc
+
+.env
+.vscode
