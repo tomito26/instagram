@@ -64,6 +64,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'gram',
     'bootstrap4',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -145,4 +146,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'),
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 django_heroku.settings(locals())
