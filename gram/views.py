@@ -50,6 +50,7 @@ def profile(request):
 @login_required
 def home(request):
     photos = Image.objects.all()
+    profile = Profile.objects.all()
     form = ImageForm()
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
@@ -60,7 +61,8 @@ def home(request):
 
     context = {
         'photos': photos,
-        'form':form
+        'form':form,
+        'profile':profile
     }
     return render(request, 'insta/home.html', context)
 
