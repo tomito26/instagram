@@ -24,8 +24,24 @@ def register(request):
     context = {'form': form}
     return render(request, 'registration/registration.html', context)
 
+@login_required
 def profile(request):
-    return render(request,'registration/profile')
+    photos = Image.objects.all()
+    profile_info = Profile.objects.all()
+    form = ProfileForm()
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+
+
+    context = {
+        'photos': photos,
+        'profile_form':form
+    }
+   
+    return render(request,'registration/profile.html',context)
 
 @login_required
 def home(request):
