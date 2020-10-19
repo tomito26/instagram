@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from .forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
+from .forms import ProfileForm,ImageForm
+from .models import Image,Profile
 # Create your views here.
 
 
@@ -24,9 +26,23 @@ def register(request):
 
 
 @login_required
-def profile(request):
-    return render(request, 'users/profile.html')
+def home(request):
+    photos = Image.objects.all()
+
+    context = {
+        'photos': photos,
+    }
+    return render(request, 'pic/index.html', context)
 
 
-def welcome(request):
-    return render(request,'welcome.html')
+def load(request):
+    form = ImageForm()
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form': form}
+
+    return render(request, 'insta/home.html', context)
