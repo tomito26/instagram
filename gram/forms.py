@@ -13,10 +13,10 @@ class UserRegisterForm(UserCreationForm):
 class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
-        fields = ['image','image_name','caption','likes','comments']
+        fields = ['image','image_name','caption']
         
     
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = ['profile_photo','bio']
