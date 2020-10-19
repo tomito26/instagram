@@ -25,7 +25,7 @@ def register(request):
     return render(request, 'registration/registration.html', context)
 
 def profile(request):
-    return(request,'registration/profile')
+    return render(request,'registration/profile')
 
 @login_required
 def home(request):
