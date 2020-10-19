@@ -4,6 +4,7 @@ from .forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm,ImageForm
 from .models import Image,Profile
+from .email import send_welcome_email
 # Create your views here.
 
 
@@ -13,6 +14,12 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
+            email = form.cleaned_data['email']
+            
+            recipient = GramLetterRecipients(username=username,email=email)
+            
+            recipient.save()
+            send_welcome_email(username,email)
             messages.success(
                 request,
                 f'Your account has been created!You are now able to login')

@@ -1,0 +1,3 @@
+Hello {{ name }}
+
+Welcome to Gram ,this is an email to confirm your registration,Feel free to share pictures like other photos and follow other people 
