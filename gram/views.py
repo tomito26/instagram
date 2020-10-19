@@ -24,18 +24,12 @@ def register(request):
     context = {'form': form}
     return render(request, 'registration/registration.html', context)
 
+def profile(request):
+    return(request,'registration/profile')
 
 @login_required
 def home(request):
     photos = Image.objects.all()
-
-    context = {
-        'photos': photos,
-    }
-    return render(request, 'pic/index.html', context)
-
-
-def load(request):
     form = ImageForm()
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
@@ -43,6 +37,22 @@ def load(request):
             form.save()
             return redirect('home')
 
+
+    context = {
+        'photos': photos,
+        'form':form
+    }
+    return render(request, 'insta/home.html', context)
+
+
+def load(request):
+    form = ImageForm()
+    if request.method == 'POST':
+        form = ImageForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
     context = {'form': form}
 
-    return render(request, 'insta/home.html', context)
+    return render(request, 'insta/load.html', context)

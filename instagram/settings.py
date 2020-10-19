@@ -73,6 +73,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'gram',
     'bootstrap4',
+    'cloudinary',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -157,7 +158,7 @@ STATICFILES_DIRS = [
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-LOGIN_REDIRECT_URL = 'welcome'
+LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 
 cloudinary.config(cloud_name=config('CLOUD_NAME'),
