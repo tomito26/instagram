@@ -9,9 +9,10 @@ class Image(models.Model):
     image = CloudinaryField('image')
     image_name= models.CharField(max_length=60)
     caption = models.TextField()
-    profile=models.ForeignKey('Profile',on_delete=models.CASCADE)
+    pub_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     likes = models.IntegerField(default=0,blank=True,null=True)
     pub_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    user = models.ForeignKey('Profile',on_delete=models.CASCADE,null=True,blank=True)
   
     
     def __str__(self):
@@ -24,7 +25,7 @@ class Image(models.Model):
         self.delete()
     
 class Profile(models.Model):
-    profile_photo =CloudinaryField('image')
+    profile_photo =CloudinaryField('profile_photo')
     user =models.OneToOneField(User,on_delete=models.CASCADE)
     bio=models.TextField()
     
@@ -41,7 +42,7 @@ class Comments:
     comment=models.CharField(max_length=3000)
     image=models.ForeignKey('Image',on_delete=models.CASCADE)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    createed=models.DateField(auto_now_add=True,null=True)
+    created=models.DateField(auto_now_add=True,null=True,blank=True)
    
     def save_comment(self):
             self.save()
