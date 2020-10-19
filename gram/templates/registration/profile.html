@@ -10,9 +10,9 @@
     <div class="m pt-4">
         {% load crispy_forms_tags %}
         <!-- Button to Open the Modal -->
-        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#myModal">
-            Upload Image
-        </button>
+        <a href="modal" data-toggle="modal" data-target="#myModal">
+           <img src="{{profile.profile_photo.url}}" alt="Image">
+        </a>
 
         <!-- The Modal -->
         <div class="modal" id="myModal">
