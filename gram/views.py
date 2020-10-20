@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from .forms import UserRegisterForm
+from .forms import CommentsForm, UserRegisterForm
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm,ImageForm,UserUpdateForm
 from .models import Image,Profile
@@ -63,7 +63,7 @@ def home(request):
     form = ImageForm()
     users = User.objects.all()
     if request.method == 'POST':
-        form = ImageForm(request.POST, request.FILES)
+        form = ImageForm(request.POST,request.FILES,instance=request.user.profile)
         if form.is_valid():
             form.save()
             return redirect('home')
@@ -77,14 +77,15 @@ def home(request):
     return render(request, 'insta/home.html', context)
 
 
-def load(request):
-    form = ImageForm()
+
+def comment(request,image_id):
+    image = Image.objects.get(id=image_id)
+    commentform = CommentsForm
     if request.method == 'POST':
-        form = ImageForm(request.POST,request.FILES)
-        if form.is_valid():
-            form.save()
+        commentform=CommentsForm(request.POST,instance=request.user.profile)
+        if commentform.is_valid():
+            commentform.save()
             return redirect('home')
-
-    context = {'form': form}
-
-    return render(request, 'insta/load.html', context)
+    
+    return render(request,'insta/comments')
+    

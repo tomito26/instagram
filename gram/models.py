@@ -40,7 +40,7 @@ class Profile(models.Model):
     
 class Comments(models.Model):
     comment=models.CharField(max_length=3000)
-    image=models.ForeignKey('Image',on_delete=models.CASCADE)
+    image=models.ForeignKey(Image,on_delete=models.CASCADE)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     created=models.DateField(auto_now_add=True,null=True,blank=True)
    
