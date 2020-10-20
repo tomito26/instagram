@@ -61,6 +61,7 @@ def home(request):
     photos = Image.objects.all()
     profile = Profile.objects.all()
     form = ImageForm()
+    users = User.objects.all()
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
