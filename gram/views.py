@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from .forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileForm,ImageForm
+from .forms import ProfileForm,ImageForm,UserUpdateForm
 from .models import Image,Profile
 # from .email import send_welcome_email
 from django.contrib.auth.models import User
@@ -33,16 +33,25 @@ def profile(request):
     photos = Image.objects.all()
     profile_info = Profile.objects.all()
     form = ProfileForm()
+    u_form = UserUpdateForm()
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES)
-        if form.is_valid():
+        u_form =UserUpdateForm(request.POST,instance=request.user)
+        form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and form.is_valid():
+            u_form.save()
             form.save()
+            messages.success(
+                request,
+                f'Your account has been Updated!')
             return redirect('profile')
-
-
+    else:
+        u_form =UserUpdateForm(request.POST,instance=request.user)
+        form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+    
     context = {
         'photos': photos,
-        'profile_form':form
+        'profile_form':form,
+        'u_form':u_form
     }
    
     return render(request,'registration/profile.html',context)
