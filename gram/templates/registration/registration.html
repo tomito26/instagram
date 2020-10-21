@@ -6,9 +6,9 @@
 <div class="container pb-5">
     <div class="row pt-5">
         <div class="col-sm-3 col-md-3"></div>
-        <div class="col-md-xs-12,col-sm-6,col-md-6" style="border: 1px solid rgba(121, 119, 119, 0.2);padding:50px;">
-            <div class="content-section" >
-                <form method="POST">
+        <div class="col-md-xs-12,col-sm-6,col-md-6">
+            <div class="card" >
+                <form method="POST" class="p-5" >
                     {% csrf_token %}
                     <fieldset class="form-group">
                         <legend class="border-bottom mb-4">Create Account</legend>
@@ -19,7 +19,7 @@
                     </div>
                 </form>
                 <div class="border-top pt-3">
-                    <small class="text-muted">
+                    <small class="text-muted p-3">
                         Already Have An Account? <a href="{% url 'login' %}">Sign In</a>
                     </small>
                 </div>

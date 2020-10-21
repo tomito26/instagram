@@ -1,9 +1,10 @@
+from django.http import request
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from .forms import CommentsForm, UserRegisterForm
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileForm,ImageForm,UserUpdateForm
-from .models import Image,Profile
+from .forms import ProfileUpdateForm,ImageForm,UserUpdateForm
+from .models import Image,Profile,Comments
 # from .email import send_welcome_email
 from django.contrib.auth.models import User
 # Create your views here.
@@ -32,25 +33,24 @@ def register(request):
 def profile(request):
     photos = Image.objects.all()
     profile_info = Profile.objects.all()
-    form = ProfileForm()
-    u_form = UserUpdateForm()
+  
     if request.method == 'POST':
-        u_form =UserUpdateForm(request.POST,instance=request.user)
-        form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
-        if u_form.is_valid() and form.is_valid():
+        u_form = UserUpdateForm(request.POST,instance=request.user)
+        p_form = ProfileUpdateForm(request.POST,request.FILES,instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
             u_form.save()
-            form.save()
+            p_form.save()
             messages.success(
                 request,
                 f'Your account has been Updated!')
             return redirect('profile')
     else:
-        u_form =UserUpdateForm(request.POST,instance=request.user)
-        form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
-    
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+     
     context = {
         'photos': photos,
-        'profile_form':form,
+        'p_form':p_form,
         'u_form':u_form
     }
    
@@ -63,7 +63,7 @@ def home(request):
     form = ImageForm()
     users = User.objects.all()
     if request.method == 'POST':
-        form = ImageForm(request.POST,request.FILES,instance=request.user.profile)
+        form = ImageForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
             return redirect('home')
@@ -72,20 +72,47 @@ def home(request):
     context = {
         'photos': photos,
         'form':form,
-        'profile':profile
+        'profile':profile,
+        'users':users
     }
     return render(request, 'insta/home.html', context)
 
 
 
-def comment(request,image_id):
-    image = Image.objects.get(id=image_id)
+def post(request,id):
+    image = Image.objects.get(id=id)
+    comments = Comments.objects.all()
     commentform = CommentsForm
     if request.method == 'POST':
-        commentform=CommentsForm(request.POST,instance=request.user.profile)
+        commentform=CommentsForm(request.POST)
         if commentform.is_valid():
             commentform.save()
-            return redirect('home')
+            return redirect('post')
     
-    return render(request,'insta/comments')
+    context = {
+        'commentform':commentform,
+        'image':image,
+        'comments':comments
+    }
     
+    return render(request,'insta/comment.html',context)
+
+def comment(request,id):
+    # comments = 
+    return render(request,'insta/comment.html')
+
+def search_results(request):
+    if 'pic' in request.GET and request.GET['pic']:
+        search_term = request.GET.get("pic")
+        searched_images=Image.search_by_name(search_term)
+        message = f"{search_term}"
+        
+        context= {
+            'message':message,
+            'image':searched_images
+        }
+        return render(request,'insta/search.html',context)
+    
+    else:
+        message = "You haven't searched for any term"
+        return render(request,'insta/search.html',{'message':message})

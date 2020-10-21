@@ -16,12 +16,13 @@ class ImageForm(forms.ModelForm):
         fields = ['image','image_name','caption']
         
     
-class ProfileForm(forms.ModelForm):
+class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['profile_photo','bio']
+        fields = ['profile_photo']
 
 class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
     class Meta:
         model = User
         fields = ['username','email']
@@ -30,4 +31,5 @@ class CommentsForm(forms.ModelForm):
     class Meta:
         model = Comments
         fields = ['comment']
+        
         
