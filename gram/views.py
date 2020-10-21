@@ -76,7 +76,7 @@ def home(request):
         'profile':profile,
         'users':users
     }
-    return render(request, 'insta/home.html', context)
+    return render(request, 'home.html', context)
 
 
 
