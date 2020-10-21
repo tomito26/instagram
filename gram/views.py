@@ -1,3 +1,4 @@
+import pdb
 from django.http import request
 from django.shortcuts import render,redirect
 from django.contrib import messages
@@ -79,17 +80,24 @@ def home(request):
 
 
 
-def post(request,id):
-    image = Image.objects.get(id=id)
+def post(request,image_id):
+    image = Image.objects.get(id=image_id)
     comments = Comments.objects.all()
-    commentform = CommentsForm
+    commentform = CommentsForm()
     if request.method == 'POST':
         commentform=CommentsForm(request.POST)
         if commentform.is_valid():
-            commentform.save()
-            return redirect('post')
+            content = commentform.fields['comment']
+            new_comment=Comments(comment=content,image=image,user=request.user)
+            new_comment.save()
+            
+            context={
+                'new_comment':new_comment
+            }
+            return redirect('home',context)
     
     context = {
+        
         'commentform':commentform,
         'image':image,
         'comments':comments
@@ -97,9 +105,6 @@ def post(request,id):
     
     return render(request,'insta/comment.html',context)
 
-def comment(request,id):
-    # comments = 
-    return render(request,'insta/comment.html')
 
 def search_results(request):
     if 'pic' in request.GET and request.GET['pic']:
