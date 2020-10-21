@@ -103,7 +103,7 @@ def post(request,image_id):
         'comments':comments
     }
     
-    return render(request,'insta/comment.html',context)
+    return render(request,'comment.html',context)
 
 
 def search_results(request):
@@ -116,8 +116,8 @@ def search_results(request):
             'message':message,
             'image':searched_images
         }
-        return render(request,'insta/search.html',context)
+        return render(request,'search.html',context)
     
     else:
         message = "You haven't searched for any term"
-        return render(request,'insta/search.html',{'message':message})
+        return render(request,'search.html',{'message':message})
