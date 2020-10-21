@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid pb-5">
+    <div class="row pt-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <img src="{{user.profile.profile_photo.url}}" class="img-fluid rounded-circle" alt="" style="height: 60px;width:60px">
+                </div>
+                <div class="img">
+                    <img src="{{image.image.url}}" alt="{{image.image_name}}" class="img-fluid">
+                </div>
+                <div class="card-body">
+                    <p>{{image.caption}}</p>
+                    <p>{{image.pub_date}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col md-6">
+            <div class="card">
+                {% for comment in new_comment %}
+                        <p>{{comment.comment}}</p>
+                {% endfor %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Comment</legend>
+                        {{commentform|crispy}}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-dark">comment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
