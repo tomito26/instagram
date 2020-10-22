@@ -1,20 +1,22 @@
 
 # Gallery App
-This  project is a [instagram clone](https://gallery97.herokuapp.com)website where users can  post their  images,like and follow other followers
+This  project is a [instagram clone](https://gram98.herokuapp.com/)website where users can  post their  images,like and follow other followers
  Heres the home page
- ![home](home.png)
- On clicking a single image
- ![image](oneimage.png)
+ ![home](homeinsta.png)
+ On clicking upload on the navbar
+ ![image](uploadingimage.png)
 
 
 ## Author
 * Thomas Khaemba 
 
 ## Features
-* The website has a searchbar where you can search for images based on their name
-* The inages are clickable which reveal the  details of the webpage
-* The website has a footer with fontawesome icons and afew details
-* 
+* The website has a navbar  with icon of the website which directs the user to home page likewise the homepage
+* The uploadimage on the navbar when clicked it gives a section where you add caption and image itself
+* The website has a searchbar where you can search for images by using a single word or nameof the image
+* The images have clickable comment icon which reveal the  details of the image and comments
+* The settings on the navbar has both the logout and profile details
+* The app has a functioning authentication system where users can login  and register
 
 ## Installations 
 For this project to run one needs python  and pip installations
